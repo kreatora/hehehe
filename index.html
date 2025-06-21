@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(to right top, #ffe4e1, #ffc0cb, #e6e6fa, #d8bfd8); /* A dreamy, romantic gradient */
+            font-family: 'Playfair Display', serif; /* An elegant, classic font */
+            color: #4a4a4a; /* A soft, warm gray */
+            position: relative; /* For potential future flourishes */
+        }
+        h1 {
+            color: #d81b60; /* A deep, passionate rose */
+            font-family: 'Dancing Script', cursive; /* A beautiful, flowing script font */
+            font-size: 3.5em; /* Larger, more impactful */
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255,255,255,0.7); /* More prominent, glowing shadow */
+            margin-bottom: 30px;
+        }
+        video {
+            max-width: 30%; /* Reduced video size from 85% to 60% */
+            border: 8px solid #ff69b4; /* Hot pink border for love */
+            border-radius: 25px; /* Even softer rounded corners */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 20px rgba(255,105,180,0.7); /* Deeper shadow with a pink glow */
+            margin-bottom: 25px;
+            transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+        }
+        video:hover {
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+        p {
+            color: #6a5acd; /* A soft, romantic periwinkle */
+            font-family: 'Lora', serif; /* A graceful, readable serif font */
+            font-size: 1.4em; /* Larger, more inviting text */
+            line-height: 1.6;
+            max-width: 70%;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .love-message {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            max-width: 80%; /* Increased width for better centering appearance */
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            animation: fadeIn 2s ease-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .love-message h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #d81b60;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 70%;
+            margin: 0 auto;
+        }
+
+        .love-message p {
+            font-family: 'Lora', serif;
+            color: #5a3e72; /* A deep, romantic purple */
+            font-size: 1.2em;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 100%; /* Ensure text fills the love message container */
+        }
+
+        /* Floating Hearts Animation */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            background-color: rgba(255, 105, 180, 0.7); /* Hot pink with transparency */
+            transform: rotate(-45deg);
+            animation: floatUp 8s infinite ease-in;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -50%;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: 50%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(-45deg) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(-45deg) scale(1.2); opacity: 0; }
+        }
+
+        /* New styles for the game overlay */
+        .game-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right top, #ffafbd, #ffc3a0); /* Matching your body gradient */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            transition: opacity 1s ease-out;
+        }
+
+        .game-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .game-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #d81b60;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .memory-game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 100px); /* Changed to 2 columns for 2x2 */
+            grid-gap: 15px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            perspective: 1000px; /* For 3D flip effect */
+        }
+
+        .memory-card {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .memory-card.flip {
+            transform: rotateY(180deg);
+        }
+
+        .front-face,
+        .back-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            border-radius: 10px;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .front-face {
+            background: linear-gradient(to right top, #ff69b4, #ffb6c1); /* Hot pink */
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .back-face {
+            background: linear-gradient(to right bottom, #8a2be2, #9370db); /* Romantic violet */
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.match .front-face,
+        .memory-card.match .back-face {
+            pointer-events: none; /* Disable clicks on matched cards */
+        }
+
+        .hidden-message {
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            transform: translateY(20px);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            color: #d81b60;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .hidden-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* New styles for smartPopup */
+        .smart-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+            border-radius: 20px;
+            padding: 40px 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10000; /* Ensure it's on top */
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #d81b60;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden; /* Start hidden */
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            text-align: center;
+        }
+
+        .smart-popup.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Style for initially hidden content */
+        .content-hidden {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            max-width: 85%; /* Limiting the width to allow centering by the body's flexbox */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center items horizontally within main content */
+        }
+    </style>
+</head>
+<body>
+    <div class="game-overlay">
+        <h1 class="game-title">A Little Challenge.</h1>
+        <div class="memory-game-grid"></div>
+    </div>
+
+    <div id="smartPopup" class="smart-popup">
+        <p>wow, very smart!</p>
+    </div>
+
+    <div id="mainContent" class="content-hidden">
+        <h1>Happy Birthday, My Love!</h1>
+        <video controls>
+            <source src="timeline 1.mp4" type="video/mp4">
+        </video>
+        <div class="love-message">
+            <h2>My Dear, I wish you me and peace in your new age. 
+                When I sleep on your couch I feel very safe, and when you bring blankets I cover up my face. 
+                I do love you.</h2>
+        </div>
+        <div class="hearts-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const heartsContainer = document.querySelector('.hearts-container');
+            const gameOverlay = document.querySelector('.game-overlay');
+            const memoryGameGrid = document.querySelector('.memory-game-grid');
+
+            // Hearts animation (existing code)
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.width = Math.random() * 20 + 10 + 'px'; // Size between 10px and 30px
+                heart.style.height = heart.style.width;
+                heart.style.left = Math.random() * 60 + 20 + 'vw'; // Distribute hearts from 20vw to 80vw for centering
+                heart.style.animationDuration = Math.random() * 4 + 6 + 's'; // Duration between 6s and 10s
+                heart.style.animationDelay = Math.random() * 2 + 's'; // Delay up to 2s
+                heartsContainer.appendChild(heart);
+
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                });
+            }
+            setInterval(createHeart, 300); // Create a new heart every 300ms
+
+            // Memory Game Logic (new code)
+            const symbols = ['💖', '🌟']; // Only two unique symbols for 2x2 game
+            let cards = [...symbols, ...symbols]; // Duplicate symbols for pairs
+            let flippedCards = [];
+            let matchedCards = 0;
+            let lockBoard = false;
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function createBoard() {
+                shuffle(cards).forEach((symbol, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('memory-card');
+                    card.dataset.symbol = symbol;
+                    card.dataset.index = index; // Unique identifier for each card instance
+
+                    const frontFace = document.createElement('div');
+                    frontFace.classList.add('front-face');
+                    frontFace.textContent = '❤️'; // Changed from '?' to a heart emoji
+
+                    const backFace = document.createElement('div');
+                    backFace.classList.add('back-face');
+                    backFace.textContent = symbol;
+
+                    card.appendChild(frontFace);
+                    card.appendChild(backFace);
+                    memoryGameGrid.appendChild(card);
+
+                    card.addEventListener('click', flipCard);
+                });
+            }
+
+            function flipCard() {
+                if (lockBoard) return;
+                if (this === flippedCards[0]) return; // Prevent double clicking the same card
+
+                this.classList.add('flip');
+                flippedCards.push(this);
+
+                if (flippedCards.length === 2) {
+                    lockBoard = true;
+                    checkForMatch();
+                }
+            }
+
+            function checkForMatch() {
+                let isMatch = flippedCards[0].dataset.symbol === flippedCards[1].dataset.symbol;
+                isMatch ? disableCards() : unflipCards();
+            }
+
+            function disableCards() {
+                flippedCards[0].removeEventListener('click', flipCard);
+                flippedCards[1].removeEventListener('click', flipCard);
+                flippedCards[0].classList.add('match');
+                flippedCards[1].classList.add('match');
+
+                matchedCards += 2;
+                resetBoard();
+
+                if (matchedCards === cards.length) {
+                    setTimeout(() => {
+                        gameOverlay.classList.add('hidden');
+                        const smartPopup = document.getElementById('smartPopup');
+                        const mainContent = document.getElementById('mainContent');
+
+                        if (smartPopup) {
+                            smartPopup.classList.add('visible');
+                        }
+
+                        // After 0.5 seconds, hide popup and show main content
+                        setTimeout(() => {
+                            if (smartPopup) {
+                                smartPopup.classList.remove('visible');
+                                smartPopup.classList.add('hidden'); // Add hidden class for proper transition/removal
+                            }
+                            if (mainContent) {
+                                mainContent.classList.remove('content-hidden');
+                            }
+                        }, 2000); // Changed from 0.5 seconds to 2 seconds
+
+                    }, 1000); // Hide game after 1 second delay (gives time for initial pop up to show)
+                }
+            }
+
+            function unflipCards() {
+                setTimeout(() => {
+                    flippedCards[0].classList.remove('flip');
+                    flippedCards[1].classList.remove('flip');
+                    resetBoard();
+                }, 1000);
+            }
+
+            function resetBoard() {
+                [flippedCards, lockBoard] = [[], false];
+            }
+
+            createBoard(); // Initialize the game board on load
+        });
+    </script>
+</body>
+</html> 
