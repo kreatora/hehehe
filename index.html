@@ -23,18 +23,29 @@
             text-shadow: 0 5px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255,255,255,0.7); /* More prominent, glowing shadow */
             margin-bottom: 30px;
         }
-        video {
-            max-width: 30%; /* Reduced video size from 85% to 60% */
+        .responsive-video-container {
+            position: relative;
+            width: 100%; /* Take full width of its parent */
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) */
+            height: 0;
+            overflow: hidden;
+            max-width: 25%; /* Control overall size */
+            margin: 0 auto 25px auto; /* Center and add bottom margin */
             border: 8px solid #ff69b4; /* Hot pink border for love */
             border-radius: 25px; /* Even softer rounded corners */
             box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 20px rgba(255,105,180,0.7); /* Deeper shadow with a pink glow */
-            margin-bottom: 25px;
             transition: transform 0.3s ease-in-out; /* Smooth hover effect */
         }
-        video:hover {
-            transform: scale(1.02); /* Slight zoom on hover */
+
+        .responsive-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-        iframe:hover {
+
+        .responsive-video-container:hover {
             transform: scale(1.02); /* Slight zoom on hover */
         }
         p {
@@ -285,7 +296,9 @@
 
     <div id="mainContent" class="content-hidden">
         <h1>Happy Birthday, My Love!</h1>
-        <iframe width="1204" height="677" src="https://www.youtube.com/embed/jY0hyt6TPz4" title="Timeline 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width: 30%; border: 8px solid #ff69b4; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 20px rgba(255,105,180,0.7); margin-bottom: 25px; transition: transform 0.3s ease-in-out;"></iframe>
+        <div class="responsive-video-container">
+            <iframe src="https://www.youtube.com/embed/jY0hyt6TPz4" title="Timeline 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
         <div class="love-message">
             <h2>My Dear, I wish you me and peace in your new age. 
                 When I sleep on your couch I feel very safe, and when you bring blankets I cover up my face. 
